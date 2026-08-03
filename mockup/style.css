@@ -1,0 +1,342 @@
+/* =====================================================================
+   PDPA Challenge Hub — Gen-Z Hyper Style
+   Vibrant, energetic, glassmorphism, bold gradients.
+   No company branding. Pure fun.
+   ===================================================================== */
+
+/* Fonts loaded in index.html via <link>. Fallback to system fonts if offline. */
+
+:root {
+  --violet: #7C3AED;
+  --violet-dark: #5B21B6;
+  --pink: #EC4899;
+  --cyan: #06B6D4;
+  --lime: #84CC16;
+  --amber: #F59E0B;
+  --red: #EF4444;
+  --blue: #3B82F6;
+  --mint: #10B981;
+
+  --bg: #0F0B1A;
+  --bg-card: rgba(255,255,255,0.04);
+  --bg-card-hover: rgba(255,255,255,0.08);
+  --glass: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.12);
+  --text: #F8FAFC;
+  --text-dim: #94A3B8;
+  --text-muted: #64748B;
+
+  --radius: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 100px;
+  --shadow: 0 8px 32px rgba(124,58,237,0.15);
+  --glow: 0 0 40px rgba(124,58,237,0.3);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 0%, rgba(124,58,237,0.2) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 50% at 80% 100%, rgba(236,72,153,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(6,182,212,0.08) 0%, transparent 50%);
+}
+
+h1, h2, h3 { font-family: 'Outfit', sans-serif; font-weight: 800; line-height: 1.1; }
+button { cursor: pointer; border: none; background: none; font: inherit; color: inherit; }
+input { font: inherit; color: inherit; }
+
+:is(button, input, a):focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 16px 60px; }
+.hidden { display: none !important; }
+
+/* ---------------------------------------------------------------- HUD */
+.hud {
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  background: rgba(15,11,26,0.85);
+  border-bottom: 1px solid var(--glass-border);
+}
+.hud-inner {
+  max-width: 960px; margin: 0 auto; padding: 12px 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.hud-home {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  display: grid; place-items: center; font-size: 18px;
+  transition: all 0.2s;
+}
+.hud-home:hover { background: var(--bg-card-hover); transform: scale(1.05); }
+.hud-meta { flex: 1; min-width: 0; }
+.hud-row { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; }
+.hud-bar { height: 6px; margin-top: 6px; border-radius: var(--radius-pill); background: rgba(255,255,255,0.1); overflow: hidden; }
+.hud-fill { height: 100%; border-radius: var(--radius-pill); background: linear-gradient(90deg, var(--violet), var(--pink), var(--cyan)); transition: width 0.4s ease; }
+.hud-tier { font-size: 11px; font-weight: 700; color: var(--amber); letter-spacing: 0.08em; }
+
+/* ---------------------------------------------------------------- views */
+.view { display: none; padding-top: 24px; }
+.view.active { display: block; animation: slideUp 0.35s ease; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ---------------------------------------------------------------- cards */
+.card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg); padding: 28px;
+  box-shadow: var(--shadow);
+}
+.kicker {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--cyan);
+}
+.lead { color: var(--text-dim); max-width: 56ch; }
+
+/* ---------------------------------------------------------------- hero */
+.hero {
+  position: relative; overflow: hidden;
+  border-radius: var(--radius-lg); padding: 48px 32px;
+  background: linear-gradient(135deg, var(--violet) 0%, var(--pink) 50%, var(--cyan) 100%);
+  text-align: center;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1.5' fill='rgba(255,255,255,0.15)'/%3E%3C/svg%3E");
+}
+.hero > * { position: relative; }
+.hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); color: #fff; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.hero p { margin-top: 12px; font-size: 18px; color: rgba(255,255,255,0.9); }
+.hero .badge {
+  display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px;
+  padding: 8px 18px; border-radius: var(--radius-pill);
+  background: rgba(255,255,255,0.2); backdrop-filter: blur(8px);
+  font-size: 12px; font-weight: 700; letter-spacing: 0.14em; color: #fff;
+}
+
+/* ---------------------------------------------------------------- form */
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-dim); }
+.field input {
+  width: 100%; padding: 14px 18px;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: var(--radius); color: var(--text); font-size: 16px;
+  transition: border-color 0.2s;
+}
+.field input:focus { border-color: var(--violet); outline: none; }
+.grid-2 { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
+
+/* ---------------------------------------------------------------- btns */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px 28px; border-radius: var(--radius-pill);
+  font-size: 15px; font-weight: 700; transition: all 0.25s;
+  position: relative; overflow: hidden;
+}
+.btn::after { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0); transition: background 0.2s; }
+.btn:hover::after { background: rgba(255,255,255,0.1); }
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: linear-gradient(135deg, var(--violet), var(--pink)); color: #fff; box-shadow: 0 4px 20px rgba(124,58,237,0.4); }
+.btn-secondary { background: var(--glass); border: 1px solid var(--glass-border); color: var(--text); }
+.btn-cyan { background: linear-gradient(135deg, var(--cyan), var(--mint)); color: #fff; }
+.btn-amber { background: linear-gradient(135deg, var(--amber), #F97316); color: #000; }
+.btn-danger { background: transparent; border: 1px solid var(--red); color: var(--red); }
+.btn-block { width: 100%; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+
+/* ----------------------------------------------------------- game menu */
+.game-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-top: 24px; }
+.game-card {
+  position: relative; text-align: left; padding: 24px;
+  border-radius: var(--radius-lg); border: 1px solid var(--glass-border);
+  transition: all 0.3s; overflow: hidden;
+}
+.game-card::before {
+  content: ''; position: absolute; inset: 0; opacity: 0.9;
+  border-radius: var(--radius-lg);
+}
+.game-card > * { position: relative; }
+.game-card:hover { transform: translateY(-4px) scale(1.02); box-shadow: var(--glow); }
+.game-card .emoji { font-size: 36px; }
+.game-card h2 { font-size: 20px; margin-top: 12px; }
+.game-card p { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 6px; }
+.game-card .chip { margin-top: 12px; padding: 5px 14px; border-radius: var(--radius-pill); background: rgba(255,255,255,0.15); font-size: 11px; font-weight: 700; display: inline-block; }
+.g1 { background: linear-gradient(135deg, #7C3AED, #4F46E5); }
+.g2 { background: linear-gradient(135deg, #EC4899, #F43F5E); }
+.g3 { background: linear-gradient(135deg, #06B6D4, #3B82F6); }
+.g4 { background: linear-gradient(135deg, #F59E0B, #EF4444); }
+
+/* ------------------------------------------------------------- back btn */
+.back {
+  display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px;
+  padding: 8px 16px; border-radius: var(--radius-pill);
+  background: var(--glass); border: 1px solid var(--glass-border);
+  font-size: 13px; font-weight: 600; color: var(--text-dim);
+  transition: all 0.2s;
+}
+.back:hover { color: var(--text); border-color: var(--violet); }
+
+/* ------------------------------------------------------------ feedback */
+.feedback { min-height: 22px; margin-top: 14px; font-size: 14px; font-weight: 600; }
+.feedback.ok { color: var(--mint); }
+.feedback.no { color: var(--red); }
+
+.notice {
+  margin-top: 20px; padding: 18px; border-radius: var(--radius);
+  background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.1));
+  border: 1px solid rgba(124,58,237,0.3);
+}
+.notice p { font-weight: 600; }
+
+/* ---------------------------------------------------------- multiplayer */
+.players-bar {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px;
+  padding: 12px 16px; border-radius: var(--radius);
+  background: var(--glass); border: 1px solid var(--glass-border);
+}
+.player-tag {
+  padding: 6px 14px; border-radius: var(--radius-pill);
+  font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
+  border: 2px solid transparent;
+}
+.player-tag.active { box-shadow: 0 0 12px currentColor; animation: pulse 1.5s infinite; }
+@keyframes pulse { 50% { box-shadow: 0 0 20px currentColor; } }
+.p-colors { --c0: #7C3AED; --c1: #EC4899; --c2: #06B6D4; --c3: #84CC16; --c4: #F59E0B; --c5: #EF4444; }
+
+/* ------------------------------------------------------------- bingo */
+.bingo-board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 20px; }
+.bingo-cell {
+  position: relative; min-height: 88px; padding: 10px; text-align: left;
+  border-radius: var(--radius); font-size: 12px; font-weight: 600; line-height: 1.3;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  color: var(--text-dim); transition: all 0.3s;
+}
+.bingo-cell:hover:not(:disabled):not(.marked) { background: var(--bg-card-hover); border-color: var(--violet); color: var(--text); }
+.bingo-cell.marked { border-color: var(--mint); color: var(--mint); background: rgba(16,185,129,0.1); }
+.bingo-cell.marked::after { content: '✓'; position: absolute; top: 6px; right: 8px; font-size: 16px; }
+.bingo-cell.wrong { animation: shake 0.3s ease; border-color: var(--red); }
+.bingo-cell.in-line { box-shadow: inset 0 0 0 2px var(--amber), 0 0 12px rgba(245,158,11,0.3); }
+@keyframes shake { 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
+
+/* ----------------------------------------------------------- jeopardy */
+.j-board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 20px; }
+.j-col { display: flex; flex-direction: column; gap: 8px; }
+.j-cat { padding: 10px 6px; border-radius: var(--radius); background: linear-gradient(135deg, var(--violet), var(--pink)); font-size: 10px; font-weight: 700; text-align: center; line-height: 1.3; }
+.j-tile { min-height: 52px; border-radius: var(--radius); background: var(--glass); border: 1px solid var(--glass-border); font-size: 20px; font-weight: 900; color: var(--amber); transition: all 0.2s; display: grid; place-items: center; }
+.j-tile:hover:not(:disabled) { background: var(--bg-card-hover); border-color: var(--amber); transform: scale(1.05); }
+.j-tile.done { font-size: 12px; font-weight: 600; }
+.j-tile.done.ok { color: var(--mint); border-color: rgba(16,185,129,0.3); }
+.j-tile.done.no { color: var(--text-muted); opacity: 0.5; }
+
+.q-panel { margin-top: 16px; }
+.timer { padding: 6px 14px; border-radius: var(--radius-pill); background: var(--amber); color: #000; font-size: 13px; font-weight: 700; }
+.timer.low { background: var(--red); color: #fff; animation: pulse 0.5s infinite; }
+
+.options { display: grid; gap: 10px; margin-top: 20px; }
+.option {
+  display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; text-align: left;
+  border-radius: var(--radius); background: var(--glass); border: 1px solid var(--glass-border);
+  font-size: 14px; transition: all 0.2s;
+}
+.option:hover:not(:disabled) { background: var(--bg-card-hover); border-color: var(--violet); }
+.option .key { flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,0.08); font-size: 12px; font-weight: 700; }
+.option.correct { border-color: var(--mint); background: rgba(16,185,129,0.1); }
+.option.correct .key { background: var(--mint); color: #000; }
+.option.picked-wrong { border-color: var(--red); background: rgba(239,68,68,0.1); }
+.option.picked-wrong .key { background: var(--red); color: #fff; }
+.explain { margin-top: 18px; padding: 16px; border-radius: var(--radius); background: rgba(245,158,11,0.1); border-left: 3px solid var(--amber); font-size: 14px; color: var(--text-dim); }
+.explain b { color: var(--text); }
+
+/* ---------------------------------------------------------- crossword */
+.cw-layout { display: grid; gap: 28px; grid-template-columns: auto 1fr; margin-top: 20px; }
+.cw-grid { display: grid; grid-template-columns: repeat(12, 30px); gap: 2px; }
+.cw-cell { position: relative; width: 30px; height: 30px; }
+.cw-block { background: transparent; }
+.cw-cell input {
+  width: 100%; height: 100%; padding: 0; text-align: center; text-transform: uppercase;
+  font-size: 13px; font-weight: 700; background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 4px; color: var(--text); transition: all 0.2s;
+}
+.cw-cell input:focus { border-color: var(--cyan); box-shadow: 0 0 8px rgba(6,182,212,0.4); outline: none; }
+.cw-cell.active input { background: rgba(124,58,237,0.2); border-color: var(--violet); }
+.cw-cell.solved input { color: var(--mint); border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.08); }
+.cw-num { position: absolute; top: 0; left: 2px; font-size: 8px; font-weight: 700; color: var(--text-muted); pointer-events: none; z-index: 1; }
+
+.clue-list { display: grid; gap: 8px; margin-top: 10px; }
+.clue { display: flex; gap: 10px; padding: 10px 12px; text-align: left; border-radius: var(--radius); background: var(--glass); border: 1px solid var(--glass-border); font-size: 13px; transition: all 0.2s; }
+.clue:hover { border-color: var(--cyan); }
+.clue.active { border-color: var(--violet); background: rgba(124,58,237,0.1); }
+.clue.solved { opacity: 0.5; }
+.clue-num { font-weight: 700; color: var(--cyan); flex: none; }
+
+/* ---------------------------------------------------------- risk game */
+.risk-card { margin-top: 20px; padding: 32px 24px; text-align: center; border-radius: var(--radius-lg); background: var(--glass); border: 1px solid var(--glass-border); }
+.risk-card p { font-size: 18px; font-weight: 600; line-height: 1.5; }
+.risk-actions { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; margin-top: 20px; }
+.streak { display: inline-flex; gap: 5px; align-items: center; font-size: 12px; font-weight: 600; color: var(--text-muted); }
+.pip { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); transition: all 0.3s; }
+.pip.on { background: var(--amber); border-color: var(--amber); box-shadow: 0 0 8px rgba(245,158,11,0.5); }
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.chip { padding: 5px 14px; border-radius: var(--radius-pill); background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border); font-size: 11px; font-weight: 700; }
+
+/* ----------------------------------------------------------- results */
+.result-hero { border-radius: var(--radius-lg); padding: 40px 24px; text-align: center; background: linear-gradient(135deg, var(--violet), var(--pink), var(--cyan)); }
+.result-hero .medal { font-size: 56px; }
+.result-hero h1 { font-size: 32px; margin-top: 8px; color: #fff; }
+.result-hero p { color: rgba(255,255,255,0.9); margin-top: 8px; }
+.score-table { margin-top: 20px; display: grid; gap: 8px; }
+.score-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--radius); background: var(--glass); border: 1px solid var(--glass-border); font-size: 14px; }
+.score-row b { flex: 1; font-weight: 600; }
+.score-row .bar { flex: none; width: 100px; height: 6px; border-radius: var(--radius-pill); background: rgba(255,255,255,0.1); overflow: hidden; }
+.score-row .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--violet), var(--pink)); }
+.score-row .val { flex: none; width: 80px; text-align: right; font-weight: 700; color: var(--amber); }
+
+/* -------------------------------------------------------- leaderboard */
+.lb-list { display: grid; gap: 8px; margin-top: 20px; }
+.lb-row { display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-radius: var(--radius); background: var(--glass); border: 1px solid var(--glass-border); }
+.lb-row.me { border-color: var(--violet); background: rgba(124,58,237,0.1); }
+.lb-rank { flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 700; background: linear-gradient(135deg, var(--violet), var(--pink)); }
+.lb-main { flex: 1; min-width: 0; }
+.lb-main b { display: block; font-weight: 600; }
+.lb-main span { font-size: 12px; color: var(--text-muted); }
+.lb-score { font-weight: 900; color: var(--amber); }
+.empty { padding: 32px; text-align: center; color: var(--text-muted); }
+
+/* ------------------------------------------------------------ confetti */
+.confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 60; }
+.confetti i { position: absolute; width: 10px; height: 14px; border-radius: 2px; animation: fall 2s ease-in forwards; }
+@keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+
+/* --------------------------------------------------------- responsive */
+@media (max-width: 768px) {
+  .cw-layout { grid-template-columns: 1fr; }
+  .cw-grid { grid-template-columns: repeat(12, 24px); }
+  .cw-cell, .cw-cell input { width: 24px; height: 24px; }
+  .j-board { grid-template-columns: repeat(3, 1fr); }
+  .grid-2 { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 2.2rem; }
+}
+@media (max-width: 480px) {
+  .j-board { grid-template-columns: repeat(2, 1fr); }
+  .bingo-board { gap: 6px; }
+  .bingo-cell { min-height: 72px; font-size: 11px; padding: 8px; }
+}
