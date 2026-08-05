@@ -1,0 +1,45 @@
+Game,#,Field1,Field2,Field3,Field4,Field5,Field6
+BINGO,1,"Find someone who locks their computer screen every time they leave their desk, even if it is just for a quick coffee run.",,,,,,
+BINGO,2,"Find someone who always double-checks the email recipient before hitting send, especially when the attachment contains personal data.",,,,,,
+BINGO,3,"Find someone who has reported a suspicious email or potential data breach to the compliance team before.",,,,,,
+BINGO,4,"Find someone who uses a different strong password for each work system and never writes them on sticky notes.",,,,,,
+BINGO,5,"Find someone who shreds confidential documents instead of tossing them in the general waste bin.",,,,,,
+BINGO,6,"Find someone who asks ""why do we need this data?"" before adding extra fields to a form or survey.",,,,,,
+BINGO,7,"Find someone who has reminded a colleague to lock their unattended laptop in the office.",,,,,,
+BINGO,8,"Find someone who uses BCC instead of CC when emailing a large group of external contacts.",,,,,,
+BINGO,9,"Find someone who checks that shared folders only give access to people who actually need the files.",,,,,,
+BINGO,10,"Find someone who has declined to share personal data with a vendor until they confirmed the purpose and got approval.",,,,,,
+BINGO,11,"Find someone who encrypts files before sending them externally, even when the recipient says ""just email it over"".",,,,,,
+BINGO,12,"Find someone who avoids discussing confidential matters in open spaces like the pantry, lift, or LRT.",,,,,,
+BINGO,13,"Find someone who has cleaned up old files or folders that were past their retention period.",,,,,,
+BINGO,14,"Find someone who politely challenges unknown visitors who try to tailgate into restricted areas.",,,,,,
+BINGO,15,"Find someone who updates customer or staff records as soon as they are told the details have changed.",,,,,,
+BINGO,16,"Find someone who only uses company-approved tools and systems to store or process personal data, never personal cloud drives.",,,,,,
+JEOPARDY,1,"PDPA Basics","What does PDPA stand for in Malaysia?","Personal Data Protection Act","Public Data Privacy Agreement","Private Digital Protection Authority","Personal Details Processing Act","The Personal Data Protection Act 2010 governs how personal data is processed in commercial transactions in Malaysia."
+JEOPARDY,2,"PDPA Basics","Under the PDPA, who is the ""data subject""?","The individual the data is about","The IT administrator","The organisation collecting the data","The regulator","The data subject is the individual the data relates to."
+JEOPARDY,3,"The 7 Principles","Which principle limits you to collecting only the data you actually need?","General Principle","Access Principle","Disclosure Principle","Security Principle","The General Principle keeps processing lawful, necessary and directly related to the stated purpose."
+JEOPARDY,4,"The 7 Principles","Which principle says you must stop keeping data once its purpose is done?","Retention Principle","Notice and Choice Principle","Access Principle","Data Integrity Principle","Do not keep personal data longer than necessary for the purpose it was collected."
+JEOPARDY,5,"Data Breach","You emailed a customer list to the wrong recipient. What comes first?","Report to your compliance contact immediately","Delete it from your sent folder and move on","Wait and see if anyone complains","Ask the recipient to promise they deleted it","Speed limits the damage. Escalate first so the response can be coordinated."
+JEOPARDY,6,"Data Breach","After the PDPA (Amendment) Act 2024, breach notification to the Commissioner is...","Mandatory, with guidance pointing to within 72 hours","Entirely optional","Only needed if a customer sues","Handled automatically by your email provider","The 2024 amendment introduced mandatory breach notification with guidance to notify within 72 hours."
+JEOPARDY,7,"At Your Desk","You are stepping away from your desk for five minutes. What do you do?","Lock your screen","Leave it, you will be quick","Switch off the monitor only","Ask a colleague to watch it","Win + L or Ctrl + Cmd + Q. Two keys, one less incident."
+JEOPARDY,8,"At Your Desk","A colleague asks to borrow your login because theirs is locked out. Best response?","Decline and point them to the service desk","Share it, they are on your team","Share it then change your password later","Type it in for them yourself","Shared credentials destroy accountability."
+JEOPARDY,9,"Sharing & Consent","Before sending personal data to an external party you should...","Confirm a lawful basis, get approval, and verify the recipient","Just send it, they asked politely","Send it and seek approval afterwards","Post it in a group chat so everyone has a copy","Lawful basis, approval, minimum necessary, verified recipient. In that order."
+JEOPARDY,10,"Sharing & Consent","An individual withdraws consent for marketing. What must happen?","Stop marketing to them and record the withdrawal","Keep going until the campaign ends","Charge a fee to process the request","Nothing, consent cannot be withdrawn","Consent can be withdrawn at any time. Stop and keep a record that you did."
+RISK,1,"Your colleague is on leave so you log in with their credentials to finish an urgent task they started.",RISK,"Shared credentials destroy accountability. Any action is logged under their name, not yours. Request your own access.",,
+RISK,2,"Before leaving for lunch, you press Win+L to lock your screen even though you will only be 10 minutes.",COMPLIANT,"Small habit, big protection. An unlocked screen is an open invitation for anyone passing by.",,
+RISK,3,"You print out a customer complaint that includes their IC number and leave it on your desk while you attend a meeting.",RISK,"Printed personal data left unattended can be seen or taken by anyone. Secure it in a drawer or shred when done.",,
+RISK,4,"A vendor emails asking for your full staff directory. You ask them to clarify the purpose and get your manager to approve before sharing only the relevant names.",COMPLIANT,"Purpose first, then minimisation. ""For reference"" is not a valid purpose.",,
+RISK,5,"You forward a customer complaint email containing their full IC number and address to your personal Gmail so you can work on it from home tonight.",RISK,"Personal email is outside company security controls. Use only approved systems for personal data.",,
+RISK,6,"After finishing with a stack of printed interview scorecards that contain candidate details, you put them in the confidential shredding bin.",COMPLIANT,"Secure disposal prevents personal data from ending up in the wrong hands.",,
+RISK,7,"You save applicant resumes and IC copies onto an unencrypted USB drive to bring to another office for a hiring discussion.",RISK,"Unencrypted USB drives are easily lost. Use encrypted transfers or approved cloud storage instead.",,
+RISK,8,"You notice an unfamiliar person browsing through files in the records room with no visitor badge. You approach them politely and ask if they have signed in.",COMPLIANT,"Physical access to records is data access. Challenging is the right call.",,
+RISK,9,"A folder of 2017 unsuccessful job applicants with full personal details is still on the shared drive. Nobody has reviewed or deleted it.",RISK,"Retention Principle: once the purpose (recruitment) is complete, personal data must be disposed of.",,
+RISK,10,"You are about to send an announcement to 150 external stakeholders, so you put all their emails in BCC to keep addresses private.",COMPLIANT,"BCC prevents mass disclosure of personal email addresses. CC would expose everyone to each other.",,
+CROSSWORD,1,"across","CONFIDENTIAL","Classification for information that unauthorised people must never see.",,,,
+CROSSWORD,2,"across","GROUNDS","Lawful ___ : the legal basis you need before processing personal data.",,,,
+CROSSWORD,3,"down","CONSENT","Permission an individual gives before their data is used.",,,,
+CROSSWORD,4,"down","NOTICE","Privacy ___ : tells people how their data will be used.",,,,
+CROSSWORD,5,"down","INTEGRITY","Data ___ : must be accurate, complete and not misleading.",,,,
+CROSSWORD,6,"down","EMPLOYEE","Every ___ is responsible for protecting personal data at work.",,,,
+CROSSWORD,7,"down","TRAINING","Awareness ___ : exactly what this booth is doing right now.",,,,
+CROSSWORD,8,"down","ACCESS","The right to request a copy of your personal data.",,,,
