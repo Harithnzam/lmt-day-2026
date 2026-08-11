@@ -1,28 +1,28 @@
-/* PDPA Challenge Hub — Game Content */
+/* PDPA Challenge Hub — Game Content (from Excel) */
 
 const BINGO_ITEMS = [
-  { action: 'Find someone who locks their computer screen every time they leave their desk, even if it is just for a quick coffee run.' },
-  { action: 'Find someone who always double-checks the email recipient before hitting send, especially when the attachment contains personal data.' },
-  { action: 'Find someone who has reported a suspicious email or potential data breach to the compliance team before.' },
-  { action: 'Find someone who uses a different strong password for each work system and never writes them on sticky notes.' },
-  { action: 'Find someone who shreds confidential documents instead of tossing them in the general waste bin.' },
-  { action: 'Find someone who asks "why do we need this data?" before adding extra fields to a form or survey.' },
-  { action: 'Find someone who has reminded a colleague to lock their unattended laptop in the office.' },
-  { action: 'Find someone who uses BCC instead of CC when emailing a large group of external contacts.' },
-  { action: 'Find someone who checks that shared folders only give access to people who actually need the files.' },
-  { action: 'Find someone who has declined to share personal data with a vendor until they confirmed the purpose and got approval.' },
-  { action: 'Find someone who encrypts files before sending them externally, even when the recipient says "just email it over".' },
-  { action: 'Find someone who avoids discussing confidential matters in open spaces like the pantry, lift, or LRT.' },
-  { action: 'Find someone who has cleaned up old files or folders that were past their retention period.' },
-  { action: 'Find someone who politely challenges unknown visitors who try to tailgate into restricted areas.' },
-  { action: 'Find someone who updates customer or staff records as soon as they are told the details have changed.' },
-  { action: 'Find someone who only uses company-approved tools and systems to store or process personal data, never personal cloud drives.' }
+  { action: 'Locks their computer screen every time they leave their desk, even if it is just for a quick coffee run.' },
+  { action: 'Always double-checks the email recipient before hitting send, especially when the attachment contains personal data.' },
+  { action: 'Has reported a suspicious email or potential data breach to the compliance team before.' },
+  { action: 'Uses a different strong password for each work system and never writes them on sticky notes.' },
+  { action: 'Shreds confidential documents instead of tossing them in the general waste bin.' },
+  { action: 'Asks "why do we need this data?" before adding extra fields to a form or survey.' },
+  { action: 'Has reminded a colleague to lock their unattended laptop in the office.' },
+  { action: 'Uses BCC instead of CC when emailing a large group of external contacts.' },
+  { action: 'Checks that shared folders only give access to people who actually need the files.' },
+  { action: 'Has declined to share personal data with a vendor until they confirmed the purpose and got approval.' },
+  { action: 'Encrypts files before sending them externally, even when the recipient says "just email it over".' },
+  { action: 'Avoids discussing confidential matters in open spaces like the pantry, lift, or LRT.' },
+  { action: 'Has cleaned up old files or folders that were past their retention period.' },
+  { action: 'Politely challenges unknown visitors who try to tailgate into restricted areas.' },
+  { action: 'Updates customer or staff records as soon as they are told the details have changed.' },
+  { action: 'Only uses company-approved tools and systems to store or process personal data, never personal cloud drives.' }
 ];
 
 const JEOPARDY = [
   { category: 'PDPA Basics', tiles: [
     { value: 100, q: 'What does PDPA stand for in Malaysia?', options: ['Personal Data Protection Act', 'Public Data Privacy Agreement', 'Private Digital Protection Authority', 'Personal Details Processing Act'], why: 'The Personal Data Protection Act 2010 governs how personal data is processed in commercial transactions in Malaysia.' },
-    { value: 100, q: 'Under the PDPA, who is the "data subject"?', options: ['The individual the data is about', 'The IT administrator', 'The organisation collecting the data', 'The regulator'], why: 'The data subject is the individual the data relates to. The organisation deciding how it is processed is the data user.' }
+    { value: 100, q: 'Under the PDPA, who is the "data subject"?', options: ['The individual the data is about', 'The IT administrator', 'The organisation collecting the data', 'The regulator'], why: 'The data subject is the individual the data relates to.' }
   ]},
   { category: 'The 7 Principles', tiles: [
     { value: 100, q: 'Which principle limits you to collecting only the data you actually need?', options: ['General Principle', 'Access Principle', 'Disclosure Principle', 'Security Principle'], why: 'The General Principle keeps processing lawful, necessary and directly related to the stated purpose.' },
@@ -69,11 +69,32 @@ const RISK_CARDS = [
   { text: 'You are about to send an announcement to 150 external stakeholders, so you put all their emails in BCC to keep addresses private.', risk: false, why: 'BCC prevents mass disclosure of personal email addresses. CC would expose everyone to each other.' }
 ];
 
-const MAX_SCORE = { bingo: 600, jeopardy: 1000, crossword: 700, risk: 300 };
-const MAX_TOTAL = MAX_SCORE.bingo + MAX_SCORE.jeopardy + MAX_SCORE.crossword + MAX_SCORE.risk;
-const TIERS = [
-  { min: 0.8, medal: '\u{1F947}', name: 'PDPA Champion' },
-  { min: 0.6, medal: '\u{1F948}', name: 'PDPA Advocate' },
-  { min: 0, medal: '\u{1F949}', name: 'PDPA Learner' }
+/* Game 5 — Responsible AI Quiz (from Excel "responsible AI" sheet) */
+const AI_QUIZ = [
+  { q: 'Responsible AI anchors on?', options: ['Trustworthiness', 'Innovation', 'Efficiency', 'Automation'], answer: 0, category: 'AI' },
+  { q: 'All of these are AI ethics principles based on AIGE except:', options: ['Fairness', 'Inclusiveness', 'Transparency', 'Profitability'], answer: 3, category: 'AI' },
+  { q: 'AI output should always be?', options: ['Human reviewed', 'Mutually trusted', 'Publicly shared', 'Fully automated'], answer: 0, category: 'AI' },
+  { q: 'AI is only as good as its?', options: ['Algorithm', 'Prompt', 'Data', 'Model'], answer: 3, category: 'AI' },
+  { q: 'Which of these HASN\'T enacted AI regulations?', options: ['Japan', 'South Korea', 'Malaysia', 'Vietnam'], answer: 2, category: 'AI' },
+  { q: 'Who remains accountable for AI decisions?', options: ['AI System', 'AI Vendor', 'Data Team', 'Humans'], answer: 3, category: 'AI' },
+  { q: 'Which team is responsible for AI Governance?', options: ['RC', 'SPF', 'AI', 'AIEA'], answer: 1, category: 'AI' },
+  { q: 'Which team is responsible for AI Impact Assessment?', options: ['RC', 'SPF', 'AI', 'AIEA'], answer: 2, category: 'AI' },
+  { q: 'What is the primary purpose of AIIA?', options: ['AI Ethics', 'AI Risk Management', 'AI Governance', 'AI Compliance'], answer: 1, category: 'AI' },
+  { q: 'Which does NOT count as personal data?', options: ['IC', 'Salary', 'Name', 'Contract'], answer: 3, category: 'DP' },
+  { q: 'Which is the biggest data privacy risk when using a public GenAI tool?', options: ['Slow response time', 'Confidential data into prompts', 'Poor grammar in response', 'High internet usage'], answer: 1, category: 'DP' },
+  { q: 'Which counts as sensitive personal data under PDPA?', options: ['Biometrics', 'Address', 'Survey', 'Company'], answer: 0, category: 'DP' },
+  { q: 'Tiers of data that require DPIA?', options: ['System with Tier 3 personal data', 'System with Tier 1 and Tier 2 personal data', 'System with Tier 2 and Tier 3 personal data', 'System with Tier 1, Tier 2 and Tier 3 personal data'], answer: 1, category: 'DP' },
+  { q: 'Who owns personal data?', options: ['HR', 'Company', 'Data Subject', 'Vendor'], answer: 2, category: 'DP' },
+  { q: 'After a notifiable data breach, who receives the 72-hour notification?', options: ['JPDP', 'Data Owner', 'Line Manager', 'All employees'], answer: 0, category: 'DP' }
 ];
-const STORAGE_KEY = 'pdpa-hub-leaderboard-v1';
+
+/* Scoring */
+const MAX_SCORE = { bingo: 600, jeopardy: 1000, crossword: 700, risk: 300, ai: 1500 };
+const MAX_TOTAL = MAX_SCORE.bingo + MAX_SCORE.jeopardy + MAX_SCORE.crossword + MAX_SCORE.risk + MAX_SCORE.ai;
+const TIERS = [
+  { min: 0.8, medal: '\u{1F947}', name: 'PDPA Champion', title: 'Supreme Data Guardian', subtitle: 'You protect data like it owes you money.' },
+  { min: 0.6, medal: '\u{1F948}', name: 'PDPA Advocate', title: 'Privacy Protector', subtitle: 'Hackers fear you. Compliance loves you.' },
+  { min: 0.4, medal: '\u{1F949}', name: 'PDPA Learner', title: 'Data Defender in Training', subtitle: 'You are on the path. Keep going!' },
+  { min: 0, medal: '\u{1F4AA}', name: 'PDPA Rookie', title: 'Privacy Padawan', subtitle: 'The force is building. Come back for more!' }
+];
+const STORAGE_KEY = 'pdpa-hub-v2';

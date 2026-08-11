@@ -5,7 +5,7 @@
 const $ = id => document.getElementById(id);
 const shuffle = arr => arr.map(v => [Math.random(), v]).sort((a, b) => a[0] - b[0]).map(p => p[1]);
 
-const run = { player: '', department: '', scores: { bingo: 0, jeopardy: 0, crossword: 0, risk: 0 }, saved: false, savedId: null };
+const run = { player: '', department: '', scores: { bingo: 0, jeopardy: 0, crossword: 0, risk: 0, ai: 0 }, saved: false, savedId: null };
 let bingo, jeop, cw, risk, jTimer = null;
 
 /* NAV */
@@ -25,6 +25,7 @@ document.querySelectorAll('[data-game]').forEach(b => b.addEventListener('click'
   else if (g === 'jeopardy') { startJeopardy(); showView('jeopardy'); }
   else if (g === 'crossword') { startCrossword(); showView('crossword'); }
   else if (g === 'risk') { startRisk(); showView('risk'); }
+  else if (g === 'ai') { startAIQuiz(); showView('ai'); }
 }));
 
 /* SCORING */
@@ -52,7 +53,7 @@ $('player-form').addEventListener('submit', e => {
   $('hud').classList.remove('hidden'); updateHUD(); showView('menu');
 });
 $('restart-btn').addEventListener('click', () => {
-  run.player = ''; run.department = ''; run.scores = { bingo: 0, jeopardy: 0, crossword: 0, risk: 0 };
+  run.player = ''; run.department = ''; run.scores = { bingo: 0, jeopardy: 0, crossword: 0, risk: 0, ai: 0 };
   run.saved = false; run.savedId = null; bingo = jeop = cw = risk = undefined; clearInterval(jTimer);
   $('in-name').value = ''; $('in-dept').value = '';
   $('hud').classList.add('hidden'); $('q-panel').classList.add('hidden');
@@ -305,13 +306,83 @@ $('risk-restart').addEventListener('click', resetRisk);
 /* =====================================================================
    RESULTS + CERTIFICATE
    ===================================================================== */
-const GAME_LABELS = { bingo: 'PDPA Bingo', jeopardy: 'PDPA Jeopardy', crossword: 'Crossword', risk: 'Spot the Risk' };
+const GAME_LABELS = { bingo: 'PDPA Bingo', jeopardy: 'PDPA Jeopardy', crossword: 'Crossword', risk: 'Spot the Risk', ai: 'AI & Data Quiz' };
 function renderResults() {
   const t = tier();
   $('res-medal').textContent = t.medal;
-  $('res-summary').textContent = (run.player || 'You') + ' scored ' + total() + ' / ' + MAX_TOTAL + ' (' + t.pct + '%) — ' + t.name;
+  $('res-summary').textContent = total() + ' / ' + MAX_TOTAL + ' points (' + t.pct + '%)';
+  $('res-title').textContent = t.title;
+  $('res-subtitle').textContent = t.subtitle;
+  $('res-player').textContent = (run.player || 'Player') + ' \u2022 ' + t.name;
   const table = $('res-table'); table.innerHTML = '';
   Object.keys(GAME_LABELS).forEach(k => { const pct = Math.round(run.scores[k] / MAX_SCORE[k] * 100); const row = document.createElement('div'); row.className = 'score-row'; row.innerHTML = '<b>' + GAME_LABELS[k] + '</b><span class="bar"><i style="width:' + pct + '%"></i></span><span class="val">' + run.scores[k] + ' / ' + MAX_SCORE[k] + '</span>'; table.appendChild(row); });
 }
+
+/* =====================================================================
+   AI & DATA PRIVACY QUIZ — Rapid-fire MCQ
+   15 questions, +100 each. No penalty for wrong. Shows correct after pick.
+   ===================================================================== */
+let aiQuiz;
+
+function startAIQuiz() {
+  if (aiQuiz && !aiQuiz.finished) { renderAIQuestion(); return; }
+  aiQuiz = { questions: shuffle(AI_QUIZ), at: 0, answered: false, finished: false };
+  run.scores.ai = 0; updateHUD();
+  renderAIQuestion();
+}
+
+function renderAIQuestion() {
+  const q = aiQuiz.questions[aiQuiz.at];
+  $('ai-text').textContent = q.q;
+  $('ai-count').textContent = (aiQuiz.at + 1) + ' / ' + aiQuiz.questions.length;
+  $('ai-score').textContent = run.scores.ai + ' pts';
+  $('ai-explain').classList.add('hidden');
+  $('ai-next').classList.add('hidden');
+  $('ai-finish').classList.add('hidden');
+  aiQuiz.answered = false;
+
+  const box = $('ai-options'); box.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'option';
+    b.dataset.idx = i;
+    b.innerHTML = '<span class="key">' + 'ABCD'[i] + '</span><span>' + opt + '</span>';
+    b.addEventListener('click', () => answerAI(i));
+    box.appendChild(b);
+  });
+}
+
+function answerAI(picked) {
+  if (aiQuiz.answered) return;
+  aiQuiz.answered = true;
+  const q = aiQuiz.questions[aiQuiz.at];
+  const correct = picked === q.answer;
+
+  document.querySelectorAll('#ai-options .option').forEach(b => {
+    b.disabled = true;
+    const idx = +b.dataset.idx;
+    if (idx === q.answer) b.classList.add('correct');
+    else if (idx === picked) b.classList.add('picked-wrong');
+  });
+
+  if (correct) {
+    award('ai', 100);
+    $('ai-explain').innerHTML = '<b>Correct! +100</b>';
+    celebrate();
+  } else {
+    $('ai-explain').innerHTML = '<b>Not quite.</b> The answer is: <b>' + q.options[q.answer] + '</b>';
+  }
+  $('ai-explain').classList.remove('hidden');
+  $('ai-score').textContent = run.scores.ai + ' pts';
+
+  if (aiQuiz.at >= aiQuiz.questions.length - 1) {
+    aiQuiz.finished = true;
+    $('ai-finish').classList.remove('hidden');
+  } else {
+    $('ai-next').classList.remove('hidden');
+  }
+}
+
+$('ai-next').addEventListener('click', () => { aiQuiz.at++; renderAIQuestion(); });
+$('ai-finish').addEventListener('click', () => showView('results'));
 
 /* BOOT */ updateHUD();
