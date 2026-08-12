@@ -66,7 +66,6 @@
     </div>
     <div class="btn-row">
       <button type="button" class="btn btn-primary" data-go="results">View my results</button>
-      <button type="button" class="btn btn-secondary" id="restart-btn">Next player</button>
     </div>
   </section>
 
@@ -181,11 +180,21 @@
   <section id="view-results" class="view">
     <button type="button" class="back" data-go="menu">&larr; Back</button>
     <div class="result-hero"><div class="medal" id="res-medal">&#x1F949;</div><h1>Challenge complete!</h1><p id="res-summary"></p></div>
-    <div class="card" style="margin-top:16px;text-align:center">
-      <p class="kicker">Your title</p>
-      <h2 style="font-size:28px;margin-top:8px;background:linear-gradient(135deg,var(--violet),var(--pink),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" id="res-title"></h2>
-      <p style="margin-top:8px;color:var(--text-dim);font-size:16px" id="res-subtitle"></p>
-      <p style="margin-top:16px;font-size:14px;color:var(--text-muted)" id="res-player"></p>
+    <div class="cert-card">
+      <div class="cert-glow"></div>
+      <div class="cert-inner">
+        <div class="cert-badge-icon" id="cert-icon">&#x1F6E1;&#xFE0F;</div>
+        <p class="cert-label">You have been certified as</p>
+        <h2 class="cert-title" id="res-title"></h2>
+        <p class="cert-sub" id="res-subtitle"></p>
+        <div class="cert-divider"></div>
+        <p class="cert-player" id="res-player"></p>
+        <div class="cert-stats">
+          <div class="cert-stat"><span class="cert-stat-num" id="cert-total">0</span><span class="cert-stat-label">Total Points</span></div>
+          <div class="cert-stat"><span class="cert-stat-num" id="cert-pct">0%</span><span class="cert-stat-label">Mastery</span></div>
+          <div class="cert-stat"><span class="cert-stat-num" id="cert-games">5</span><span class="cert-stat-label">Games</span></div>
+        </div>
+      </div>
     </div>
     <div class="card" style="margin-top:16px"><h2>Scorecard</h2><div class="score-table" id="res-table"></div></div>
     <div class="btn-row">

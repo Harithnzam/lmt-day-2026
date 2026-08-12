@@ -313,9 +313,17 @@ function renderResults() {
   $('res-summary').textContent = total() + ' / ' + MAX_TOTAL + ' points (' + t.pct + '%)';
   $('res-title').textContent = t.title;
   $('res-subtitle').textContent = t.subtitle;
-  $('res-player').textContent = (run.player || 'Player') + ' \u2022 ' + t.name;
+  $('res-player').textContent = run.player || 'Player';
+  $('cert-total').textContent = total();
+  $('cert-pct').textContent = t.pct + '%';
+  $('cert-games').textContent = Object.keys(run.scores).filter(k => run.scores[k] > 0).length;
+  // Icon based on tier
+  const icons = ['\u{1F6E1}\uFE0F', '\u{2694}\uFE0F', '\u{1F9E0}', '\u{1F331}'];
+  const idx = TIERS.indexOf(TIERS.find(x => x.name === t.name));
+  $('cert-icon').textContent = icons[idx] || '\u{1F3AE}';
   const table = $('res-table'); table.innerHTML = '';
   Object.keys(GAME_LABELS).forEach(k => { const pct = Math.round(run.scores[k] / MAX_SCORE[k] * 100); const row = document.createElement('div'); row.className = 'score-row'; row.innerHTML = '<b>' + GAME_LABELS[k] + '</b><span class="bar"><i style="width:' + pct + '%"></i></span><span class="val">' + run.scores[k] + ' / ' + MAX_SCORE[k] + '</span>'; table.appendChild(row); });
+  celebrate();
 }
 
 /* =====================================================================
