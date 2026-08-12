@@ -92,9 +92,9 @@ const AI_QUIZ = [
 const MAX_SCORE = { bingo: 600, jeopardy: 1000, crossword: 700, risk: 300, ai: 1500 };
 const MAX_TOTAL = MAX_SCORE.bingo + MAX_SCORE.jeopardy + MAX_SCORE.crossword + MAX_SCORE.risk + MAX_SCORE.ai;
 const TIERS = [
-  { min: 0.8, medal: '\u{1F947}', name: 'PDPA Champion', title: 'Supreme Data Guardian', subtitle: 'You protect data like it owes you money.' },
-  { min: 0.6, medal: '\u{1F948}', name: 'PDPA Advocate', title: 'Privacy Protector', subtitle: 'Hackers fear you. Compliance loves you.' },
-  { min: 0.4, medal: '\u{1F949}', name: 'PDPA Learner', title: 'Data Defender in Training', subtitle: 'You are on the path. Keep going!' },
-  { min: 0, medal: '\u{1F4AA}', name: 'PDPA Rookie', title: 'Privacy Padawan', subtitle: 'The force is building. Come back for more!' }
+  { min: 0.8, medal: '\u{1F947}', name: 'Digital Trust Guardian', title: 'Digital Trust Guardian', subtitle: 'You lead with integrity. Data and AI are safe with you.' },
+  { min: 0.6, medal: '\u{1F948}', name: 'AI-Ready Data Warrior', title: 'AI-Ready Data Warrior', subtitle: 'Sharp instincts. You handle data and AI like a pro.' },
+  { min: 0.4, medal: '\u{1F949}', name: 'Smart Data Protector', title: 'Smart Data Protector', subtitle: 'You know the basics. Keep levelling up!' },
+  { min: 0, medal: '\u{1F4AA}', name: 'AI Data Apprentice', title: 'AI Data Apprentice', subtitle: 'Every expert starts here. Come back stronger!' }
 ];
 const STORAGE_KEY = 'pdpa-hub-v2';
