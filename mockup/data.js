@@ -1,100 +1,87 @@
-/* PDPA Challenge Hub — Game Content (from Excel) */
+/* PDPA + Responsible AI Challenge Hub — Game Content
+   Sourced from booth posters: "Responsible AI, Responsible Decisions"
+   and "Think Before You Click, Share or Store" */
 
+/* BINGO — Networking style. Find someone who... */
 const BINGO_ITEMS = [
-  { action: 'Locks their computer screen every time they leave their desk, even if it is just for a quick coffee run.' },
-  { action: 'Always double-checks the email recipient before hitting send, especially when the attachment contains personal data.' },
-  { action: 'Has reported a suspicious email or potential data breach to the compliance team before.' },
-  { action: 'Uses a different strong password for each work system and never writes them on sticky notes.' },
-  { action: 'Shreds confidential documents instead of tossing them in the general waste bin.' },
-  { action: 'Asks "why do we need this data?" before adding extra fields to a form or survey.' },
-  { action: 'Has reminded a colleague to lock their unattended laptop in the office.' },
-  { action: 'Uses BCC instead of CC when emailing a large group of external contacts.' },
-  { action: 'Checks that shared folders only give access to people who actually need the files.' },
-  { action: 'Has declined to share personal data with a vendor until they confirmed the purpose and got approval.' },
-  { action: 'Encrypts files before sending them externally, even when the recipient says "just email it over".' },
-  { action: 'Avoids discussing confidential matters in open spaces like the pantry, lift, or LRT.' },
-  { action: 'Has cleaned up old files or folders that were past their retention period.' },
-  { action: 'Politely challenges unknown visitors who try to tailgate into restricted areas.' },
-  { action: 'Updates customer or staff records as soon as they are told the details have changed.' },
-  { action: 'Only uses company-approved tools and systems to store or process personal data, never personal cloud drives.' }
+  { action: 'Uses the PAUSE framework before prompting an AI tool — checks for Personal data, Approved tool, Understand purpose, Share minimally, Evaluate output.' },
+  { action: 'Can name at least 3 AI Ethics Principles from the poster (e.g. Transparency, Accountability, Fairness, Inclusiveness, Privacy & Security).' },
+  { action: 'Always uses enterprise AI tools instead of public ones like personal ChatGPT or personal Gemini for work tasks.' },
+  { action: 'Locks their computer screen every single time they leave their desk, even for a quick coffee run.' },
+  { action: 'Knows what SORRY stands for — Small actions, Stronger Protections (Store, Organise, Restrict, Retain, Your responsibility).' },
+  { action: 'Has reported a suspicious email or potential data breach using the See It, Note It, Report It process.' },
+  { action: 'Double-checks the email recipient and attachment before hitting send, especially when it contains personal data.' },
+  { action: 'Knows that AI must be tested, safe, and controllable — the Reliability, Safety & Control principle.' },
+  { action: 'Uses classification tags like Confidential or Secret when labelling sensitive documents.' },
+  { action: 'Understands that humans remain responsible and accountable for AI outcomes, not the AI system itself.' },
+  { action: 'Reviews shared folder access regularly to ensure only the right people can see sensitive files.' },
+  { action: 'Knows that sensitive personal data includes biometrics, health conditions, religious beliefs and criminal records.' },
+  { action: 'Uses BCC instead of CC when emailing a large group of external contacts to protect their privacy.' },
+  { action: 'Can explain the Stop, Think, Protect steps — Verify, Inform, Validate, Protect, Dispose.' },
+  { action: 'Knows that data breaches in Malaysia surged from 50 cases in 2022 to 644 cases in 2023.' },
+  { action: 'Checks AI-generated content for hallucinations, bias, and accuracy before using it in any decision.' }
 ];
 
+/* JEOPARDY — 10 MCQ questions mixing PDPA + AI */
 const JEOPARDY = [
-  { category: 'PDPA Basics', tiles: [
-    { value: 100, q: 'What does PDPA stand for in Malaysia?', options: ['Personal Data Protection Act', 'Public Data Privacy Agreement', 'Private Digital Protection Authority', 'Personal Details Processing Act'], why: 'The Personal Data Protection Act 2010 governs how personal data is processed in commercial transactions in Malaysia.' },
-    { value: 100, q: 'Under the PDPA, who is the "data subject"?', options: ['The individual the data is about', 'The IT administrator', 'The organisation collecting the data', 'The regulator'], why: 'The data subject is the individual the data relates to.' }
+  { category: 'Responsible AI', tiles: [
+    { value: 100, q: 'What does Responsible AI anchor on?', options: ['Trustworthiness', 'Innovation', 'Efficiency', 'Automation'], why: 'Responsible AI is about AI that is dependable, reliable, explainable, and safe — anchored on trustworthiness.' },
+    { value: 100, q: 'Which is NOT an AI Ethics Principle from the poster?', options: ['Profitability', 'Transparency', 'Fairness', 'Inclusiveness'], why: 'The principles are Transparency, Accountability, Fairness, Inclusiveness, Privacy & Security, Reliability, and Pursuit of Human Benefit. Profitability is not one.' }
   ]},
-  { category: 'The 7 Principles', tiles: [
-    { value: 100, q: 'Which principle limits you to collecting only the data you actually need?', options: ['General Principle', 'Access Principle', 'Disclosure Principle', 'Security Principle'], why: 'The General Principle keeps processing lawful, necessary and directly related to the stated purpose.' },
-    { value: 100, q: 'Which principle says you must stop keeping data once its purpose is done?', options: ['Retention Principle', 'Notice and Choice Principle', 'Access Principle', 'Data Integrity Principle'], why: 'Do not keep personal data longer than necessary for the purpose it was collected.' }
+  { category: 'AI Best Practices', tiles: [
+    { value: 100, q: 'What does the "P" in PAUSE stand for?', options: ['Personal or sensitive data?', 'Public access only', 'Prompt carefully', 'Protect the model'], why: 'Before you prompt, PAUSE: P = Is this Personal or sensitive data? (Health, biometric, HR, medical or IDs)' },
+    { value: 100, q: 'Who remains accountable for AI decisions and outcomes?', options: ['Humans', 'The AI system', 'The AI vendor', 'The data team'], why: 'The Accountability principle: humans remain responsible for AI outcomes. AI does not bear accountability.' }
   ]},
-  { category: 'Data Breach', tiles: [
-    { value: 100, q: 'You emailed a customer list to the wrong recipient. What comes first?', options: ['Report to your compliance contact immediately', 'Delete it from your sent folder and move on', 'Wait and see if anyone complains', 'Ask the recipient to promise they deleted it'], why: 'Speed limits the damage. Escalate first so the response can be coordinated.' },
-    { value: 100, q: 'After the PDPA (Amendment) Act 2024, breach notification to the Commissioner is...', options: ['Mandatory, with guidance pointing to within 72 hours', 'Entirely optional', 'Only needed if a customer sues', 'Handled automatically by your email provider'], why: 'The 2024 amendment introduced mandatory breach notification with guidance to notify within 72 hours.' }
+  { category: 'Data Protection', tiles: [
+    { value: 100, q: 'Which of these is sensitive personal data under PDPA?', options: ['Biometrics', 'Email address', 'Company name', 'Job title'], why: 'Sensitive personal data includes political opinions, religious beliefs, criminal records, health conditions, and biometric data.' },
+    { value: 100, q: 'What are the 3 steps in "See It. Note It. Report It."?', options: ['Spot, Record, Report', 'Find, Fix, Forget', 'Check, Copy, Close', 'Look, Log, Leave'], why: 'Spot unusual activity or data loss, Record what happened and who may be affected, Report to Data Protection Officer or Cyber Security immediately.' }
   ]},
-  { category: 'At Your Desk', tiles: [
-    { value: 100, q: 'You are stepping away from your desk for five minutes. What do you do?', options: ['Lock your screen', 'Leave it, you will be quick', 'Switch off the monitor only', 'Ask a colleague to watch it'], why: 'Win + L or Ctrl + Cmd + Q. Two keys, one less incident.' },
-    { value: 100, q: 'A colleague asks to borrow your login because theirs is locked out. Best response?', options: ['Decline and point them to the service desk', 'Share it, they are on your team', 'Share it then change your password later', 'Type it in for them yourself'], why: 'Shared credentials destroy accountability.' }
+  { category: 'PDPA Principles', tiles: [
+    { value: 100, q: 'The Retention Principle says you should...', options: ['Delete data when its purpose is complete', 'Keep data forever for reference', 'Store data on USB drives', 'Share data with all departments'], why: 'Keep data only as long as needed. e.g. remove rejected CVs after hiring is completed.' },
+    { value: 100, q: 'Non-compliance with PDPA can result in fines of up to...', options: ['RM1 million and/or 3 years imprisonment', 'RM10,000 warning', 'RM500 fine only', 'No penalty exists'], why: 'Non-compliance with PDPA can result in fines of up to RM1 million and/or imprisonment of up to 3 years.' }
   ]},
-  { category: 'Sharing & Consent', tiles: [
-    { value: 100, q: 'Before sending personal data to an external party you should...', options: ['Confirm a lawful basis, get approval, and verify the recipient', 'Just send it, they asked politely', 'Send it and seek approval afterwards', 'Post it in a group chat so everyone has a copy'], why: 'Lawful basis, approval, minimum necessary, verified recipient. In that order.' },
-    { value: 100, q: 'An individual withdraws consent for marketing. What must happen?', options: ['Stop marketing to them and record the withdrawal', 'Keep going until the campaign ends', 'Charge a fee to process the request', 'Nothing, consent cannot be withdrawn'], why: 'Consent can be withdrawn at any time. Stop and keep a record that you did.' }
+  { category: 'AI Risks & Data', tiles: [
+    { value: 100, q: 'What is the biggest data privacy risk when using public GenAI tools?', options: ['Putting confidential data into prompts', 'Slow response time', 'Poor grammar in output', 'High internet usage'], why: 'Personal data, financial data, strategy documents, and source code can leak without notice through public AI services.' },
+    { value: 100, q: 'Which are known risks of AI becoming visible after Nov 2022?', options: ['Hallucinations, fake citations, bias, deepfakes', 'Faster internet speeds', 'Lower electricity costs', 'Better phone cameras'], why: 'When AI became general-purpose, risks like hallucinations, misinformation, plagiarism, bias, deepfakes and privacy concerns became visible to everyone.' }
   ]}
 ];
 
+/* CROSSWORD — 8 terms from both posters */
 const CROSSWORD = {
   rows: 9, cols: 12,
   entries: [
-    { num: 1, dir: 'across', row: 0, col: 0, answer: 'CONFIDENTIAL', clue: 'Classification for information that unauthorised people must never see.' },
+    { num: 1, dir: 'across', row: 0, col: 0, answer: 'CONFIDENTIAL', clue: 'Classification tag for documents that unauthorised people must never see.' },
     { num: 7, dir: 'across', row: 4, col: 4, answer: 'GROUNDS', clue: 'Lawful ___ : the legal basis you need before processing personal data.' },
-    { num: 1, dir: 'down', row: 0, col: 0, answer: 'CONSENT', clue: 'Permission an individual gives before their data is used.' },
-    { num: 2, dir: 'down', row: 0, col: 2, answer: 'NOTICE', clue: 'Privacy ___ : tells people how their data will be used.' },
-    { num: 3, dir: 'down', row: 0, col: 4, answer: 'INTEGRITY', clue: 'Data ___ : must be accurate, complete and not misleading.' },
+    { num: 1, dir: 'down', row: 0, col: 0, answer: 'CONSENT', clue: 'The PDPA principle: process only with ___ or where the law allows it.' },
+    { num: 2, dir: 'down', row: 0, col: 2, answer: 'NOTICE', clue: 'Tell people what you collect and why — put this on your first page.' },
+    { num: 3, dir: 'down', row: 0, col: 4, answer: 'INTEGRITY', clue: 'Data ___ Principle: keep data accurate, complete and up to date.' },
     { num: 4, dir: 'down', row: 0, col: 6, answer: 'EMPLOYEE', clue: 'Every ___ is responsible for protecting personal data at work.' },
-    { num: 5, dir: 'down', row: 0, col: 8, answer: 'TRAINING', clue: 'Awareness ___ : exactly what this booth is doing right now.' },
-    { num: 6, dir: 'down', row: 0, col: 10, answer: 'ACCESS', clue: 'The right to request a copy of your personal data.' }
+    { num: 5, dir: 'down', row: 0, col: 8, answer: 'TRAINING', clue: 'AI processes your input but never ___ on it (Training Off best practice).' },
+    { num: 6, dir: 'down', row: 0, col: 10, answer: 'ACCESS', clue: 'PDPA principle: let people view and correct their own data, e.g. a copy of their HR record.' }
   ]
 };
 
+/* SPOT THE RISK — 10 situations mixing PDPA + AI */
 const RISK_CARDS = [
-  { text: 'Your colleague is on leave so you log in with their credentials to finish an urgent task they started.', risk: true, why: 'Shared credentials destroy accountability. Any action is logged under their name, not yours. Request your own access.' },
-  { text: 'Before leaving for lunch, you press Win+L to lock your screen even though you will only be 10 minutes.', risk: false, why: 'Small habit, big protection. An unlocked screen is an open invitation for anyone passing by.' },
-  { text: 'You print out a customer complaint that includes their IC number and leave it on your desk while you attend a meeting.', risk: true, why: 'Printed personal data left unattended can be seen or taken by anyone. Secure it in a drawer or shred when done.' },
-  { text: 'A vendor emails asking for your full staff directory. You ask them to clarify the purpose and get your manager to approve before sharing only the relevant names.', risk: false, why: 'Purpose first, then minimisation. "For reference" is not a valid purpose.' },
-  { text: 'You forward a customer complaint email containing their full IC number and address to your personal Gmail so you can work on it from home tonight.', risk: true, why: 'Personal email is outside company security controls. Use only approved systems for personal data.' },
-  { text: 'After finishing with a stack of printed interview scorecards that contain candidate details, you put them in the confidential shredding bin.', risk: false, why: 'Secure disposal prevents personal data from ending up in the wrong hands.' },
-  { text: 'You save applicant resumes and IC copies onto an unencrypted USB drive to bring to another office for a hiring discussion.', risk: true, why: 'Unencrypted USB drives are easily lost. Use encrypted transfers or approved cloud storage instead.' },
-  { text: 'You notice an unfamiliar person browsing through files in the records room with no visitor badge. You approach them politely and ask if they have signed in.', risk: false, why: 'Physical access to records is data access. Challenging is the right call.' },
-  { text: 'A folder of 2017 unsuccessful job applicants with full personal details is still on the shared drive. Nobody has reviewed or deleted it.', risk: true, why: 'Retention Principle: once the purpose (recruitment) is complete, personal data must be disposed of.' },
-  { text: 'You are about to send an announcement to 150 external stakeholders, so you put all their emails in BCC to keep addresses private.', risk: false, why: 'BCC prevents mass disclosure of personal email addresses. CC would expose everyone to each other.' }
+  { text: 'You paste a confidential strategy document into personal ChatGPT to summarise it quickly for a presentation.', risk: true, why: 'Public AI services can leak your data. Use only approved enterprise AI tools. The poster warns: Personal Data, Financial Data, Strategy Documents and Source Code can leak without notice.' },
+  { text: 'Before prompting the company AI tool, you check: Is there personal data? Am I using an approved tool? Do I understand the purpose? Am I sharing only what is needed?', risk: false, why: 'This is the PAUSE framework in action — the responsible way to use AI at work.' },
+  { text: 'You print out a customer complaint that includes their IC number and leave it on your desk while you attend a 2-hour meeting.', risk: true, why: 'Printed personal data left unattended can be seen or taken by anyone. Secure it or shred it.' },
+  { text: 'An AI tool generates a market analysis report. Before sharing it with leadership, you verify the data sources, check for hallucinations, and confirm accuracy.', risk: false, why: 'The "E" in PAUSE: Evaluate the output. Check AI-generated content for accuracy, bias, and completeness.' },
+  { text: 'You forward a colleague HR performance review email to your personal Gmail so you can read it on the train home.', risk: true, why: 'Personal email is outside company security controls. Personal data must stay in approved systems only.' },
+  { text: 'You use the enterprise AI platform with incognito chat mode enabled, ensuring no history and no data retention.', risk: false, why: 'Best practice: AI Sees Nothing — incognito chat, no history, no retention. This protects company data.' },
+  { text: 'A vendor sends you an AI-powered analytics tool and asks you to upload your full employee database for a "quick demo".', risk: true, why: 'Never share personal data with unapproved third parties. Validate the recipient, confirm purpose, get approval first.' },
+  { text: 'You notice your team shared drive still has CVs from a 2019 recruitment round. You flag it for deletion following the retention schedule.', risk: false, why: 'Retention Principle: keep data only as long as needed. Once recruitment is complete, dispose of it securely.' },
+  { text: 'You let an AI tool make the final hiring decision without any human review because it is faster and "unbiased".', risk: true, why: 'Humans remain accountable for AI decisions. AI should assist, not replace human judgment — especially for decisions affecting people.' },
+  { text: 'After spotting unusual data access logs, you document what happened, when it occurred, and who may be affected, then report it immediately.', risk: false, why: 'See It. Note It. Report It. Spot the issue, record the details, notify Data Protection Officer or Cyber Security immediately.' }
 ];
 
-/* Game 5 — Responsible AI Quiz (from Excel "responsible AI" sheet) */
-const AI_QUIZ = [
-  { q: 'Responsible AI anchors on?', options: ['Trustworthiness', 'Innovation', 'Efficiency', 'Automation'], answer: 0, category: 'AI' },
-  { q: 'All of these are AI ethics principles based on AIGE except:', options: ['Fairness', 'Inclusiveness', 'Transparency', 'Profitability'], answer: 3, category: 'AI' },
-  { q: 'AI output should always be?', options: ['Human reviewed', 'Mutually trusted', 'Publicly shared', 'Fully automated'], answer: 0, category: 'AI' },
-  { q: 'AI is only as good as its?', options: ['Algorithm', 'Prompt', 'Data', 'Model'], answer: 3, category: 'AI' },
-  { q: 'Which of these HASN\'T enacted AI regulations?', options: ['Japan', 'South Korea', 'Malaysia', 'Vietnam'], answer: 2, category: 'AI' },
-  { q: 'Who remains accountable for AI decisions?', options: ['AI System', 'AI Vendor', 'Data Team', 'Humans'], answer: 3, category: 'AI' },
-  { q: 'Which team is responsible for AI Governance?', options: ['RC', 'SPF', 'AI', 'AIEA'], answer: 1, category: 'AI' },
-  { q: 'Which team is responsible for AI Impact Assessment?', options: ['RC', 'SPF', 'AI', 'AIEA'], answer: 2, category: 'AI' },
-  { q: 'What is the primary purpose of AIIA?', options: ['AI Ethics', 'AI Risk Management', 'AI Governance', 'AI Compliance'], answer: 1, category: 'AI' },
-  { q: 'Which does NOT count as personal data?', options: ['IC', 'Salary', 'Name', 'Contract'], answer: 3, category: 'DP' },
-  { q: 'Which is the biggest data privacy risk when using a public GenAI tool?', options: ['Slow response time', 'Confidential data into prompts', 'Poor grammar in response', 'High internet usage'], answer: 1, category: 'DP' },
-  { q: 'Which counts as sensitive personal data under PDPA?', options: ['Biometrics', 'Address', 'Survey', 'Company'], answer: 0, category: 'DP' },
-  { q: 'Tiers of data that require DPIA?', options: ['System with Tier 3 personal data', 'System with Tier 1 and Tier 2 personal data', 'System with Tier 2 and Tier 3 personal data', 'System with Tier 1, Tier 2 and Tier 3 personal data'], answer: 1, category: 'DP' },
-  { q: 'Who owns personal data?', options: ['HR', 'Company', 'Data Subject', 'Vendor'], answer: 2, category: 'DP' },
-  { q: 'After a notifiable data breach, who receives the 72-hour notification?', options: ['JPDP', 'Data Owner', 'Line Manager', 'All employees'], answer: 0, category: 'DP' }
-];
-
-/* Scoring */
-const MAX_SCORE = { bingo: 600, jeopardy: 1000, crossword: 700, risk: 300, ai: 1500 };
-const MAX_TOTAL = MAX_SCORE.bingo + MAX_SCORE.jeopardy + MAX_SCORE.crossword + MAX_SCORE.risk + MAX_SCORE.ai;
+/* Scoring: 4 games */
+const MAX_SCORE = { bingo: 600, jeopardy: 1000, crossword: 700, risk: 300 };
+const MAX_TOTAL = MAX_SCORE.bingo + MAX_SCORE.jeopardy + MAX_SCORE.crossword + MAX_SCORE.risk;
 const TIERS = [
   { min: 0.8, medal: '\u{1F947}', name: 'Digital Trust Guardian', title: 'Digital Trust Guardian', subtitle: 'You lead with integrity. Data and AI are safe with you.' },
   { min: 0.6, medal: '\u{1F948}', name: 'AI-Ready Data Warrior', title: 'AI-Ready Data Warrior', subtitle: 'Sharp instincts. You handle data and AI like a pro.' },
   { min: 0.4, medal: '\u{1F949}', name: 'Smart Data Protector', title: 'Smart Data Protector', subtitle: 'You know the basics. Keep levelling up!' },
   { min: 0, medal: '\u{1F4AA}', name: 'AI Data Apprentice', title: 'AI Data Apprentice', subtitle: 'Every expert starts here. Come back stronger!' }
 ];
-const STORAGE_KEY = 'pdpa-hub-v2';
+const STORAGE_KEY = 'pdpa-hub-v3';

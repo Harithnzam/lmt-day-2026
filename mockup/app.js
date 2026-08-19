@@ -5,7 +5,7 @@
 const $ = id => document.getElementById(id);
 const shuffle = arr => arr.map(v => [Math.random(), v]).sort((a, b) => a[0] - b[0]).map(p => p[1]);
 
-const run = { player: '', department: '', scores: { bingo: 0, jeopardy: 0, crossword: 0, risk: 0, ai: 0 }, saved: false, savedId: null };
+const run = { player: '', department: '', scores: { bingo: 0, jeopardy: 0, crossword: 0, risk: 0 }, saved: false, savedId: null };
 let bingo, jeop, cw, risk, jTimer = null;
 
 /* NAV */
@@ -25,7 +25,6 @@ document.querySelectorAll('[data-game]').forEach(b => b.addEventListener('click'
   else if (g === 'jeopardy') { startJeopardy(); showView('jeopardy'); }
   else if (g === 'crossword') { startCrossword(); showView('crossword'); }
   else if (g === 'risk') { startRisk(); showView('risk'); }
-  else if (g === 'ai') { startAIQuiz(); showView('ai'); }
 }));
 
 /* SCORING */
@@ -53,7 +52,7 @@ $('player-form').addEventListener('submit', e => {
   $('hud').classList.remove('hidden'); updateHUD(); showView('menu');
 });
 $('restart-btn').addEventListener('click', () => {
-  run.player = ''; run.department = ''; run.scores = { bingo: 0, jeopardy: 0, crossword: 0, risk: 0, ai: 0 };
+  run.player = ''; run.department = ''; run.scores = { bingo: 0, jeopardy: 0, crossword: 0, risk: 0 };
   run.saved = false; run.savedId = null; bingo = jeop = cw = risk = undefined; clearInterval(jTimer);
   $('in-name').value = ''; $('in-dept').value = '';
   $('hud').classList.add('hidden'); $('q-panel').classList.add('hidden');
@@ -136,6 +135,7 @@ function confirmBingo() {
       award('bingo', 100);
       msgs.push('FULL HOUSE! +100 bonus!');
       celebrate();
+      setTimeout(() => showView('results'), 2000);
     }
   }
 
@@ -171,6 +171,7 @@ function renderJBoard() {
   const done = jeop.tiles.filter(t => t.state !== 'open').length;
   $('j-progress').textContent = done + ' / ' + jeop.tiles.length + ' answered';
   $('j-progress').className = 'feedback ok';
+  if (done === jeop.tiles.length) { setTimeout(() => showView('results'), 1500); }
 }
 function openQuestion(tile) {
   jeop.active = tile;
@@ -259,7 +260,7 @@ function onCwKey(e) { const key = e.target.dataset.key; const { r, c } = cw.cell
 function checkCrossword() {
   const msgs = [];
   cw.entries.forEach(entry => { if (entry.solved) return; if (entry.keys.map(k => cw.cells.get(k).input.value.toUpperCase()).join('') !== entry.answer) return; entry.solved = true; entry.keys.forEach(k => cw.cells.get(k).input.parentElement.classList.add('solved')); if (!entry.revealed) { award('crossword', 75); msgs.push('✅ ' + entry.answer + ' +75!'); } else { msgs.push(entry.answer + ' filled.'); } });
-  if (cw.entries.filter(e => e.solved).length === cw.entries.length && !cw.bonus) { cw.bonus = true; award('crossword', 100); msgs.push('🎉 Full grid! +100 bonus!'); }
+  if (cw.entries.filter(e => e.solved).length === cw.entries.length && !cw.bonus) { cw.bonus = true; award('crossword', 100); msgs.push('Full grid! +100 bonus!'); setTimeout(() => showView('results'), 2000); }
   if (msgs.length) { $('cw-msg').textContent = msgs.join(' '); $('cw-msg').className = 'feedback ok'; celebrate(); renderClues(); selectEntry(cw.selected); }
   updateCwChips();
 }
@@ -295,7 +296,7 @@ function answerRisk(saidRisk) {
     if (risk.streak % 4 === 0 && risk.bonuses < 4) { risk.bonuses++; award('risk', 25); lead = '<b>🔥 Streak bonus! +25 +25</b> '; celebrate(); }
   } else { risk.streak = 0; lead = '<b>❌ ' + (card.risk ? 'That\'s a risk!' : 'That\'s actually fine.') + '</b> '; }
   $('risk-explain').innerHTML = lead + card.why; $('risk-explain').classList.remove('hidden'); renderStreak();
-  if (risk.at >= risk.deck.length - 1) { risk.finished = true; $('risk-restart').classList.remove('hidden'); $('risk-count').textContent = 'Done! ' + run.scores.risk + ' / ' + MAX_SCORE.risk; }
+  if (risk.at >= risk.deck.length - 1) { risk.finished = true; $('risk-restart').classList.remove('hidden'); $('risk-count').textContent = 'Done! ' + run.scores.risk + ' / ' + MAX_SCORE.risk; setTimeout(() => showView('results'), 1500); }
   else $('risk-next').classList.remove('hidden');
 }
 $('risk-ok').addEventListener('click', () => answerRisk(false));
@@ -306,7 +307,7 @@ $('risk-restart').addEventListener('click', resetRisk);
 /* =====================================================================
    RESULTS + CERTIFICATE
    ===================================================================== */
-const GAME_LABELS = { bingo: 'PDPA Bingo', jeopardy: 'PDPA Jeopardy', crossword: 'Crossword', risk: 'Spot the Risk', ai: 'AI & Data Quiz' };
+const GAME_LABELS = { bingo: 'PDPA Bingo', jeopardy: 'Jeopardy', crossword: 'Crossword', risk: 'Spot the Risk' };
 function renderResults() {
   const t = tier();
   $('res-medal').textContent = t.medal;
@@ -325,72 +326,5 @@ function renderResults() {
   Object.keys(GAME_LABELS).forEach(k => { const pct = Math.round(run.scores[k] / MAX_SCORE[k] * 100); const row = document.createElement('div'); row.className = 'score-row'; row.innerHTML = '<b>' + GAME_LABELS[k] + '</b><span class="bar"><i style="width:' + pct + '%"></i></span><span class="val">' + run.scores[k] + ' / ' + MAX_SCORE[k] + '</span>'; table.appendChild(row); });
   celebrate();
 }
-
-/* =====================================================================
-   AI & DATA PRIVACY QUIZ — Rapid-fire MCQ
-   15 questions, +100 each. No penalty for wrong. Shows correct after pick.
-   ===================================================================== */
-let aiQuiz;
-
-function startAIQuiz() {
-  if (aiQuiz && !aiQuiz.finished) { renderAIQuestion(); return; }
-  aiQuiz = { questions: shuffle(AI_QUIZ), at: 0, answered: false, finished: false };
-  run.scores.ai = 0; updateHUD();
-  renderAIQuestion();
-}
-
-function renderAIQuestion() {
-  const q = aiQuiz.questions[aiQuiz.at];
-  $('ai-text').textContent = q.q;
-  $('ai-count').textContent = (aiQuiz.at + 1) + ' / ' + aiQuiz.questions.length;
-  $('ai-score').textContent = run.scores.ai + ' pts';
-  $('ai-explain').classList.add('hidden');
-  $('ai-next').classList.add('hidden');
-  $('ai-finish').classList.add('hidden');
-  aiQuiz.answered = false;
-
-  const box = $('ai-options'); box.innerHTML = '';
-  q.options.forEach((opt, i) => {
-    const b = document.createElement('button'); b.type = 'button'; b.className = 'option';
-    b.dataset.idx = i;
-    b.innerHTML = '<span class="key">' + 'ABCD'[i] + '</span><span>' + opt + '</span>';
-    b.addEventListener('click', () => answerAI(i));
-    box.appendChild(b);
-  });
-}
-
-function answerAI(picked) {
-  if (aiQuiz.answered) return;
-  aiQuiz.answered = true;
-  const q = aiQuiz.questions[aiQuiz.at];
-  const correct = picked === q.answer;
-
-  document.querySelectorAll('#ai-options .option').forEach(b => {
-    b.disabled = true;
-    const idx = +b.dataset.idx;
-    if (idx === q.answer) b.classList.add('correct');
-    else if (idx === picked) b.classList.add('picked-wrong');
-  });
-
-  if (correct) {
-    award('ai', 100);
-    $('ai-explain').innerHTML = '<b>Correct! +100</b>';
-    celebrate();
-  } else {
-    $('ai-explain').innerHTML = '<b>Not quite.</b> The answer is: <b>' + q.options[q.answer] + '</b>';
-  }
-  $('ai-explain').classList.remove('hidden');
-  $('ai-score').textContent = run.scores.ai + ' pts';
-
-  if (aiQuiz.at >= aiQuiz.questions.length - 1) {
-    aiQuiz.finished = true;
-    $('ai-finish').classList.remove('hidden');
-  } else {
-    $('ai-next').classList.remove('hidden');
-  }
-}
-
-$('ai-next').addEventListener('click', () => { aiQuiz.at++; renderAIQuestion(); });
-$('ai-finish').addEventListener('click', () => showView('results'));
 
 /* BOOT */ updateHUD();

@@ -164,7 +164,7 @@ input { font: inherit; color: inherit; }
 .btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
 
 /* ----------------------------------------------------------- game menu */
-.game-grid { display: grid; gap: 12px; grid-template-columns: repeat(5, 1fr); margin-top: 24px; }
+.game-grid { display: grid; gap: 12px; grid-template-columns: repeat(4, 1fr); margin-top: 24px; }
 .game-card {
   position: relative; text-align: left; padding: 24px;
   border-radius: var(--radius-lg); border: 1px solid var(--glass-border);
