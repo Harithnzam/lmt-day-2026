@@ -125,6 +125,7 @@ function confirmBingo() {
         award('bingo', 100);
         msgs.push('BINGO! First line! +100');
         celebrate();
+        setTimeout(() => showView('results'), 2000);
       } else {
         msgs.push('Another line complete!');
       }
