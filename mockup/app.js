@@ -116,14 +116,18 @@ function confirmBingo() {
 
   const msgs = ['Claimed! +25'];
 
-  // Check lines
+  // Check lines — only first line awards bonus
   BINGO_LINES.forEach((line, idx) => {
     if (bingo.lines.has(idx)) return;
     if (line.every(n => bingo.claimed[n])) {
       bingo.lines.add(idx);
-      award('bingo', 100);
-      msgs.push('BINGO! Line complete! +100');
-      celebrate();
+      if (bingo.lines.size === 1) {
+        award('bingo', 100);
+        msgs.push('BINGO! First line! +100');
+        celebrate();
+      } else {
+        msgs.push('Another line complete!');
+      }
     }
   });
 
@@ -163,15 +167,19 @@ function renderJBoard() {
       const b = document.createElement('button'); b.type = 'button';
       b.className = 'j-tile' + (t.state === 'open' ? '' : ' done ' + t.state);
       b.textContent = t.state === 'open' ? t.value : (t.state === 'ok' ? '✓' : '·');
-      b.disabled = t.state !== 'open';
-      b.addEventListener('click', () => openQuestion(t)); col.appendChild(b);
+      b.disabled = false; // always clickable for review
+      b.addEventListener('click', () => {
+        if (t.state === 'open') openQuestion(t);
+        else reviewQuestion(t);
+      });
+      col.appendChild(b);
     });
     board.appendChild(col);
   });
   const done = jeop.tiles.filter(t => t.state !== 'open').length;
   $('j-progress').textContent = done + ' / ' + jeop.tiles.length + ' answered';
   $('j-progress').className = 'feedback ok';
-  if (done === jeop.tiles.length) { setTimeout(() => showView('results'), 1500); }
+  if (done === jeop.tiles.length && !jeop.redirected) { jeop.redirected = true; setTimeout(() => showView('results'), 1500); }
 }
 function openQuestion(tile) {
   jeop.active = tile;
@@ -197,6 +205,7 @@ function startTimer() {
 function answerQuestion(picked, timedOut = false) {
   clearInterval(jTimer); const tile = jeop.active; if (!tile || tile.state !== 'open') return;
   const correct = picked === tile.answer; tile.state = correct ? 'ok' : 'no';
+  tile.picked = picked; // store what they picked
   document.querySelectorAll('#q-options .option').forEach(b => { b.disabled = true; if (b.dataset.opt === tile.answer) b.classList.add('correct'); else if (b.dataset.opt === picked) b.classList.add('picked-wrong'); });
   if (correct) { award('jeopardy', tile.value); celebrate(); }
   $('q-explain').innerHTML = (correct ? '<b>✅ Correct! +' + tile.value + '</b> ' : (timedOut ? '<b>⏰ Time up!</b> ' : '<b>❌ Not quite.</b> ')) + tile.why;
@@ -205,6 +214,29 @@ function answerQuestion(picked, timedOut = false) {
 }
 $('q-next').addEventListener('click', () => { $('q-panel').classList.add('hidden'); jeop.active = null; });
 $('q-skip').addEventListener('click', () => { clearInterval(jTimer); $('q-panel').classList.add('hidden'); jeop.active = null; });
+
+function reviewQuestion(tile) {
+  $('q-cat').textContent = tile.category + ' · ' + tile.value + ' pts · REVIEW';
+  $('q-text').textContent = tile.q;
+  $('q-explain').classList.remove('hidden');
+  $('q-next').classList.remove('hidden'); $('q-skip').classList.add('hidden');
+  $('q-timer').classList.add('hidden');
+  $('q-panel').classList.remove('hidden');
+
+  const correct = tile.picked === tile.answer;
+  $('q-explain').innerHTML = (correct ? '<b>✅ You answered correctly.</b> ' : '<b>❌ You picked: ' + (tile.picked || 'nothing') + '</b> ') + tile.why;
+
+  const box = $('q-options'); box.innerHTML = '';
+  tile.options.forEach((opt, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'option'; b.disabled = true;
+    if (opt === tile.answer) b.classList.add('correct');
+    else if (opt === tile.picked) b.classList.add('picked-wrong');
+    b.innerHTML = '<span class="key">' + 'ABCD'[i] + '</span><span>' + opt + '</span>';
+    box.appendChild(b);
+  });
+
+  $('q-panel').scrollIntoView({ behavior: 'smooth' });
+}
 
 /* =====================================================================
    CROSSWORD
@@ -271,9 +303,12 @@ $('cw-reveal').addEventListener('click', () => { const e = cw.entries[cw.selecte
 /* =====================================================================
    SPOT THE RISK
    ===================================================================== */
-function startRisk() { if (risk && !risk.finished) { renderRisk(); return; } resetRisk(); }
+function startRisk() {
+  if (risk) { renderRisk(); return; }
+  resetRisk();
+}
 function resetRisk() {
-  risk = { deck: shuffle(RISK_CARDS), at: 0, streak: 0, bonuses: 0, answered: false, finished: false };
+  risk = { deck: shuffle(RISK_CARDS), at: 0, streak: 0, bonuses: 0, answered: false, finished: false, answers: [], reviewing: false };
   run.scores.risk = 0; updateHUD(); renderRisk();
 }
 function renderRisk() {
@@ -281,7 +316,34 @@ function renderRisk() {
   $('risk-text').textContent = card.text;
   $('risk-count').textContent = (risk.at + 1) + ' / ' + risk.deck.length;
   $('risk-explain').classList.add('hidden'); $('risk-next').classList.add('hidden'); $('risk-restart').classList.add('hidden');
-  $('risk-ok').disabled = false; $('risk-bad').disabled = false; risk.answered = false; renderStreak();
+
+  if (risk.reviewing) {
+    // Review mode — show what they answered
+    const ans = risk.answers[risk.at];
+    const card = risk.deck[risk.at];
+    const correct = ans === card.risk;
+    const picked = ans ? 'Risk' : 'Safe';
+    const actual = card.risk ? 'Risk' : 'Safe';
+    $('risk-ok').disabled = true; $('risk-bad').disabled = true;
+    $('risk-explain').innerHTML = (correct ? '<b>✅ You said: ' + picked + ' — Correct!</b> ' : '<b>❌ You said: ' + picked + ' — Answer: ' + actual + '</b> ') + card.why;
+    $('risk-explain').classList.remove('hidden');
+    if (risk.at < risk.deck.length - 1) $('risk-next').classList.remove('hidden');
+    $('risk-count').textContent = 'Review ' + (risk.at + 1) + ' / ' + risk.deck.length;
+    return;
+  }
+
+  if (risk.finished) {
+    // Show final state with review option
+    $('risk-ok').disabled = true; $('risk-bad').disabled = true;
+    $('risk-count').textContent = 'Done! ' + run.scores.risk + ' / ' + MAX_SCORE.risk;
+    $('risk-next').classList.remove('hidden');
+    $('risk-next').textContent = 'Review answers';
+    return;
+  }
+
+  $('risk-ok').disabled = false; $('risk-bad').disabled = false; risk.answered = false;
+  $('risk-next').textContent = 'Next';
+  renderStreak();
 }
 function renderStreak() {
   const lit = risk.streak === 0 ? 0 : (risk.streak % 4 === 0 ? 4 : risk.streak % 4);
@@ -289,19 +351,30 @@ function renderStreak() {
 }
 function answerRisk(saidRisk) {
   if (risk.answered) return; risk.answered = true;
+  risk.answers.push(saidRisk);
   const card = risk.deck[risk.at]; const correct = saidRisk === card.risk;
   $('risk-ok').disabled = true; $('risk-bad').disabled = true;
   let lead;
   if (correct) { risk.streak++; award('risk', 25); lead = '<b>✅ Correct! +25</b> ';
     if (risk.streak % 4 === 0 && risk.bonuses < 4) { risk.bonuses++; award('risk', 25); lead = '<b>🔥 Streak bonus! +25 +25</b> '; celebrate(); }
-  } else { risk.streak = 0; lead = '<b>❌ ' + (card.risk ? 'That\'s a risk!' : 'That\'s actually fine.') + '</b> '; }
+  } else { risk.streak = 0; lead = '<b>❌ ' + (card.risk ? 'That\'s a risk!' : 'That\'s actually safe.') + '</b> '; }
   $('risk-explain').innerHTML = lead + card.why; $('risk-explain').classList.remove('hidden'); renderStreak();
-  if (risk.at >= risk.deck.length - 1) { risk.finished = true; $('risk-restart').classList.remove('hidden'); $('risk-count').textContent = 'Done! ' + run.scores.risk + ' / ' + MAX_SCORE.risk; setTimeout(() => showView('results'), 1500); }
+  if (risk.at >= risk.deck.length - 1) { risk.finished = true; $('risk-count').textContent = 'Done! ' + run.scores.risk + ' / ' + MAX_SCORE.risk; if (!risk.redirected) { risk.redirected = true; setTimeout(() => showView('results'), 1500); } }
   else $('risk-next').classList.remove('hidden');
 }
 $('risk-ok').addEventListener('click', () => answerRisk(false));
 $('risk-bad').addEventListener('click', () => answerRisk(true));
-$('risk-next').addEventListener('click', () => { risk.at++; renderRisk(); });
+$('risk-next').addEventListener('click', () => {
+  if (risk.finished && !risk.reviewing) {
+    // Enter review mode from the start
+    risk.reviewing = true; risk.at = 0; renderRisk();
+  } else if (risk.reviewing) {
+    // Browse through review
+    if (risk.at < risk.deck.length - 1) { risk.at++; renderRisk(); }
+  } else {
+    risk.at++; renderRisk();
+  }
+});
 $('risk-restart').addEventListener('click', resetRisk);
 
 /* =====================================================================
