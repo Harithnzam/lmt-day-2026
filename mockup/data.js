@@ -18,7 +18,7 @@ const BINGO_ITEMS = [
   { action: 'Knows that sensitive personal data includes biometrics, health conditions, religious beliefs and criminal records.' },
   { action: 'Uses BCC instead of CC when emailing a large group of external contacts to protect their privacy.' },
   { action: 'Can explain the Stop, Think, Protect steps — Verify, Inform, Validate, Protect, Dispose.' },
-  { action: 'Knows that data breaches in Malaysia surged from 50 cases in 2022 to 644 cases in 2023.' },
+  { action: 'Knows that data breaches in Malaysia surged from 50 cases in 2022 to 646 cases in 2023.' },
   { action: 'Checks AI-generated content for hallucinations, bias, and accuracy before using it in any decision.' }
 ];
 
