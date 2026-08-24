@@ -305,6 +305,7 @@ $('cw-reveal').addEventListener('click', () => { const e = cw.entries[cw.selecte
    SPOT THE RISK
    ===================================================================== */
 function startRisk() {
+  if (risk && risk.finished) { risk.at = 0; renderRisk(); return; }
   if (risk) { renderRisk(); return; }
   resetRisk();
 }
@@ -318,27 +319,22 @@ function renderRisk() {
   $('risk-count').textContent = (risk.at + 1) + ' / ' + risk.deck.length;
   $('risk-explain').classList.add('hidden'); $('risk-next').classList.add('hidden'); $('risk-restart').classList.add('hidden');
 
-  if (risk.reviewing) {
-    // Review mode — show what they answered
+  if (risk.finished) {
+    // Show final state — user can browse through with Next
+    $('risk-ok').disabled = true; $('risk-bad').disabled = true;
+    $('risk-count').textContent = 'Done! ' + run.scores.risk + ' / ' + MAX_SCORE.risk;
+    $('risk-next').classList.remove('hidden');
+    $('risk-next').textContent = 'Next';
+    // Show current card's answer
     const ans = risk.answers[risk.at];
     const card = risk.deck[risk.at];
     const correct = ans === card.risk;
     const picked = ans ? 'Risk' : 'Safe';
     const actual = card.risk ? 'Risk' : 'Safe';
-    $('risk-ok').disabled = true; $('risk-bad').disabled = true;
     $('risk-explain').innerHTML = (correct ? '<b>✅ You said: ' + picked + ' — Correct!</b> ' : '<b>❌ You said: ' + picked + ' — Answer: ' + actual + '</b> ') + card.why;
     $('risk-explain').classList.remove('hidden');
-    if (risk.at < risk.deck.length - 1) $('risk-next').classList.remove('hidden');
-    $('risk-count').textContent = 'Review ' + (risk.at + 1) + ' / ' + risk.deck.length;
-    return;
-  }
-
-  if (risk.finished) {
-    // Show final state with review option
-    $('risk-ok').disabled = true; $('risk-bad').disabled = true;
-    $('risk-count').textContent = 'Done! ' + run.scores.risk + ' / ' + MAX_SCORE.risk;
-    $('risk-next').classList.remove('hidden');
-    $('risk-next').textContent = 'Review answers';
+    $('risk-count').textContent = (risk.at + 1) + ' / ' + risk.deck.length + ' · ' + run.scores.risk + ' pts';
+    if (risk.at >= risk.deck.length - 1) $('risk-next').classList.add('hidden');
     return;
   }
 
@@ -366,11 +362,7 @@ function answerRisk(saidRisk) {
 $('risk-ok').addEventListener('click', () => answerRisk(false));
 $('risk-bad').addEventListener('click', () => answerRisk(true));
 $('risk-next').addEventListener('click', () => {
-  if (risk.finished && !risk.reviewing) {
-    // Enter review mode from the start
-    risk.reviewing = true; risk.at = 0; renderRisk();
-  } else if (risk.reviewing) {
-    // Browse through review
+  if (risk.finished) {
     if (risk.at < risk.deck.length - 1) { risk.at++; renderRisk(); }
   } else {
     risk.at++; renderRisk();
